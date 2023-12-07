@@ -2,25 +2,35 @@
 
 -- ----------------------------------------------------------------------------
 
+-- ParamSet is an object use to manager script parameter and make preset I/O.
+-- Modification of a pram, can be signal to script via callback binded to
+-- parameter in ParamSet
+--
+-- `params` is a global ParamSet provides by norns. This ParamSet can expose
+-- configuaration of the script to system setting menu. Parameters added to
+-- `params` can be changed with system UI.
 ---@class norns.ParamSet
-params = {}
+paramset = {}
+
+params = {} ---@type norns.ParamSet
 
 -- constructor of new paramset.
 ---@param id string
 ---@param name string
-function params.new(id, name) end
+---@return norns.ParamSet
+function paramset.new(id, name) end
 
 -- ----------------------------------------------------------------------------
 -- initialization
 
 -- default reads parameter value from default preset
-function params:default() end
+function paramset:default() end
 
 -- bang calls action fucntion on all parameters.
-function params:bang() end
+function paramset:bang() end
 
 -- clear reset all state of ParamSet to empty value.
-function params:clear() end
+function paramset:clear() end
 
 -- ----------------------------------------------------------------------------
 -- add parameter
@@ -29,7 +39,7 @@ function params:clear() end
 -- All other add parameter method wrap this method in some way.
 ---@param args table # parameter config table, key 'type' and 'id' are required.
 ---    args can provide an optional 'action' function.
-function params:add(args) end
+function paramset:add(args) end
 
 -- add_number adds a number parameter.
 ---@param id string # identifier with no space
@@ -39,33 +49,33 @@ function params:add(args) end
 ---@param default number
 ---@param formatter fun(value: number): string
 ---@param wrap boolean
-function params:add_number(id, name, min, max, default, formatter, wrap) end
+function paramset:add_number(id, name, min, max, default, formatter, wrap) end
 
 -- add_option adds an option parameter.
 ---@param id string
 ---@param name string
 ---@param options any
 ---@param default any
-function params:add_option(id, name, options, default) end
+function paramset:add_option(id, name, options, default) end
 
 -- add_control adds a control parameter.
 ---@param id string
 ---@param name string
 ---@param controlspec any
 ---@param formatter any
-function params:add_control(id, name, controlspec, formatter) end
+function paramset:add_control(id, name, controlspec, formatter) end
 
 -- add_file adds a file parameter.
 ---@param id string
 ---@param name string
 ---@param path string
-function params:add_file(id, name, path) end
+function paramset:add_file(id, name, path) end
 
 -- add_text adds a string parameter.
 ---@param id string
 ---@param name string
 ---@param text string
-function params:add_text(id, name, text) end
+function paramset:add_text(id, name, text) end
 
 -- add_taper adds a taper parameter.
 ---@param id string
@@ -75,19 +85,19 @@ function params:add_text(id, name, text) end
 ---@param deffault number
 ---@param k number
 ---@param units string
-function params:add_taper(id, name, min, max, deffault, k, units) end
+function paramset:add_taper(id, name, min, max, deffault, k, units) end
 
 -- add_trigger adds a trigger parameter.
 ---@param id string
 ---@param name string
-function params:add_trigger(id, name) end
+function paramset:add_trigger(id, name) end
 
 -- add_binary adds a binary parameter.
 ---@param id string
 ---@param name string
 ---@param behavior string
 ---@param dfault number
-function params:add_binary(id, name, behavior, dfault) end
+function paramset:add_binary(id, name, behavior, dfault) end
 
 -- ----------------------------------------------------------------------------
 -- visual pesudo-parameter
@@ -97,7 +107,7 @@ function params:add_binary(id, name, behavior, dfault) end
 -- can be toggle hiden.
 ---@param id? string
 ---@param name? string
-function params:add_separator(id, name) end
+function paramset:add_separator(id, name) end
 
 -- add_group adds a group for parameters. Group can not be nested.
 -- ID and name are optional, group with id will get an unique index, and can be
@@ -105,40 +115,40 @@ function params:add_separator(id, name) end
 ---@param id? string
 ---@param name? string
 ---@param n integer # group id
-function params:add_group(id, name, n) end
+function paramset:add_group(id, name, n) end
 
 -- ----------------------------------------------------------------------------
 -- meta data
 
 -- print prints string representation on screen.
-function params:print() end
+function paramset:print() end
 
 -- list prints out all IDs.
-function params:list() end
+function paramset:list() end
 
 -- string resutns string representation of a parameter. That string is made with
 -- formatter bind with parameter.
 ---@param index number | string # parameter index in parameter list or parameter id
 ---@return string
-function params:string(index) end
+function paramset:string(index) end
 
 ---@param index number # parameter index in parameter list
 ---@return string # get_id gets string id of a parameter.
-function params:get_id(index) end
+function paramset:get_id(index) end
 
 -- t returns type of a parameter.
 ---@param index number | string # parameter index in parameter list or parameter id
 ---@return string param_type
-function params:t(index) end
+function paramset:t(index) end
 
 -- get_range returns parameter value range with a table.
 ---@param index number | string # parameter index in parameter list or parameter id
 ---@return number[] range # { min, max }
-function params:get_range(index) end
+function paramset:get_range(index) end
 
 ---@param index number | string # parameter index in parameter list or parameter id
 ---@return boolean
-function params:get_allow_pmap(index) end
+function paramset:get_allow_pmap(index) end
 
 -- ----------------------------------------------------------------------------
 -- value operation
@@ -147,53 +157,53 @@ function params:get_allow_pmap(index) end
 ---@param index number | string # parameter index in parameter list or parameter id
 ---@param v any # new param value
 ---@param silent? boolean # when false, param action will be called with new, default to false
-function params:set(index, v, silent) end
+function paramset:set(index, v, silent) end
 
 -- set_raw just as `set`, but only works on control type parameters.
 ---@param index number | string # parameter index in parameter list or parameter id
 ---@param v any # new param value
 ---@param silent? boolean # when false, param action will be called with new, default to false
-function params:set_raw(index, v, silent) end
+function paramset:set_raw(index, v, silent) end
 
 -- get reads parameter value
 ---@param index number | string # parameter index in parameter list or parameter id
 ---@return any
-function params:get(index) end
+function paramset:get(index) end
 
 -- get_raw just as `get`, but only works on control type parameters.
 ---@param index number | string # parameter index in parameter list or parameter id
 ---@return any
-function params:get_raw(index) end
+function paramset:get_raw(index) end
 
 -- delta sets param by offset.
 ---@param index number | string # parameter index in parameter list or parameter id
 ---@param d number # value offset
-function params:delta(index, d) end
+function paramset:delta(index, d) end
 
 -- set_actioin binds a function to parameter, function gets called on parameter
 -- value is changed. New parameter value will be passed to that function.
 ---@param index number | string # parameter index in parameter list or parameter id
 ---@param func fun(value: any)
-function params:set_action(index, func) end
+function paramset:set_action(index, func) end
 
 --  set_save sets if a parameter should be saved in file.
 ---@param index number | string # parameter index in parameter list or parameter id
 ---@param state boolean
-function params:set_save(index, state) end
+function paramset:set_save(index, state) end
 
 -- ----------------------------------------------------------------------------
 --  visibility
 
 -- hide sets a parameter as hiden.
-function params:hide(index) end
+function paramset:hide(index) end
 
 -- show sets a parameter as shown.
-function params:show(index) end
+function paramset:show(index) end
 
 -- visible gets visibility of a parameter.
 ---@param index number
 ---@return boolean is_visible
-function params:visible(index) end
+function paramset:visible(index) end
 
 -- ----------------------------------------------------------------------------
 -- preset file operation
@@ -204,7 +214,7 @@ function params:visible(index) end
 ---    directory. When nil is passed, config will be written to <scriptname>.pset
 ---    file.
 ---@param name? string
-function params:write(filename, name) end
+function paramset:write(filename, name) end
 
 -- read load parameters from file.
 ---@param filename? string | number # absolute path or preset index. When number
@@ -212,11 +222,11 @@ function params:write(filename, name) end
 ---    directory. When nil is passed, index number will read from pset-last.txt
 ---    under local data directory.
 ---@param silent boolean
-function params:read(filename, silent) end
+function paramset:read(filename, silent) end
 
 -- delete removes specified preset file from file system.
 ---@param filename? string | number # absolute path or preset index. When number
 ---    is passed, file will be <scirptname>-<number>.pset under local data
 ---    directory. When nil is passed, file will be [scriptname].pset
 ---@param name? string
-function params:delete(filename, name) end
+function paramset:delete(filename, name) end

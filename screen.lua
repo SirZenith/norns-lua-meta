@@ -117,6 +117,8 @@
 
 -- ----------------------------------------------------------------------------
 
+-- Screen class provides API to draw on screen with path or image. It's possible
+-- to update only portion of the screen.
 ---@class norns.Screen
 screen = {}
 
