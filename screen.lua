@@ -211,6 +211,10 @@ function screen.draw_to(image, func) end
 -- recovered when restore gets called.
 function screen.save() end
 
+-- restore pop a cursor state from internal stack. Recovered to a state that was
+-- saved before.
+function screen.restore() end
+
 -- level sets current gray scale level for drawing.
 ---@param value integer # gray scale value in [0, 15]
 function screen.level(value) end
