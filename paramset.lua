@@ -9,6 +9,9 @@
 -- `params` is a global ParamSet provides by norns. This ParamSet can expose
 -- configuaration of the script to system setting menu. Parameters added to
 -- `params` can be changed with system UI.
+--
+-- User can create their own ParamSet Object by `paramset.new()` in script, and
+-- use it for configuaration managing.
 ---@class norns.ParamSet
 paramset = {}
 
@@ -54,15 +57,15 @@ function paramset:add_number(id, name, min, max, default, formatter, wrap) end
 -- add_option adds an option parameter.
 ---@param id string
 ---@param name string
----@param options any
+---@param options string[]
 ---@param default any
 function paramset:add_option(id, name, options, default) end
 
 -- add_control adds a control parameter.
 ---@param id string
 ---@param name string
----@param controlspec any
----@param formatter any
+---@param controlspec norns.ControlSpec
+---@param formatter fun(param: norns.param.Control): string
 function paramset:add_control(id, name, controlspec, formatter) end
 
 -- add_file adds a file parameter.
@@ -95,9 +98,9 @@ function paramset:add_trigger(id, name) end
 -- add_binary adds a binary parameter.
 ---@param id string
 ---@param name string
----@param behavior string
----@param dfault number
-function paramset:add_binary(id, name, behavior, dfault) end
+---@param behavior norns.param.BinaryBehaviorType
+---@param default number
+function paramset:add_binary(id, name, behavior, default) end
 
 -- ----------------------------------------------------------------------------
 -- visual pesudo-parameter
