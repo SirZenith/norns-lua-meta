@@ -215,11 +215,11 @@ function screen.save() end
 ---@param value integer # gray scale value in [0, 15]
 function screen.level(value) end
 
--- line_width sets path stroke line width
+-- line_width sets line width used when stroking a path.
 ---@param w integer
 function screen.line_width(w) end
 
--- line_cap sets path line cap style
+-- line_cap sets path line cap style.
 ---@param style integer
 function screen.line_cap(style) end
 
@@ -266,13 +266,13 @@ function screen.move_rel(x, y) end
 ---@param y integer
 function screen.pixel(x, y) end
 
--- line draws a line from current position to given absolute coordinate.
+-- line draws a line path from current position to given absolute coordinate.
 -- Cursor stays at end position after drawing.
 ---@param x number
 ---@param y number
 function screen.line(x, y) end
 
--- line_rel draws a line from current position to given relative coordinate.
+-- line_rel draws a line path from current position to given relative coordinate.
 -- Cursor stays at end position after drawing.
 ---@param x number
 ---@param y number
@@ -286,13 +286,13 @@ function screen.line_rel(x, y) end
 ---@param angle2 number
 function screen.arc(x, y, r, angle1, angle2) end
 
--- circle draw a circle centered as give absolute coordinate.
+-- circle draw a circle path centered as give absolute coordinate.
 ---@param x number
 ---@param y number
 ---@param r number
 function screen.circle(x, y, r) end
 
--- rect draws a rectangle at given absolute coordinate.
+-- rect draws a rectangle path at given absolute coordinate.
 ---@param x number
 ---@param y number
 ---@param w number
@@ -319,15 +319,15 @@ function screen.curve(x1, y1, x2, y2, x3, y3) end
 ---@param y3 number # y of end point
 function screen.curve_rel(x1, y1, x2, y2, x3, y3) end
 
--- close closes current path, drawing a straight line from current positon to
+-- close closes current path, drawing a straight path from current positon to
 -- the beginning of current path.
 function screen.close() end
 
--- stroke strokes current path on screen with line width sets to cursor.
+-- stroke draws outline of  current path on screen.
 -- After stroke, current path is cleared, all 'relative' operation won't work.
 function screen.stroke() end
 
--- fill fills current closed path with color sets to cursor.
+-- fill fills internal part of current path.
 -- After fill, current  path is cleared, all 'relative' operation won't work.
 function screen.fill() end
 
