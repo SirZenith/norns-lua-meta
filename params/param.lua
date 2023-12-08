@@ -1,0 +1,5 @@
+---@class norns.params.Param
+---@field t number # param type id
+---@field id string
+---@field name string
+---@field action? fun(valu: any) # param value changed callback

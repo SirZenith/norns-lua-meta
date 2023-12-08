@@ -1,0 +1,4 @@
+-- A parameter with no value. All it does is call the action callback bind to it
+-- when `set` method is called.
+---@class nonrs.params.Trigger : norns.params.Param
+---@field action fun()

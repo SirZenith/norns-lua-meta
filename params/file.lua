@@ -1,1 +1,4 @@
----@class norns.param.Files
+---@class norns.params.Files : norns.params.Param
+---@field path string
+---@field dir string
+---@field dirffiles string[]

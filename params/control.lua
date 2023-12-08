@@ -1,9 +1,6 @@
----@class norns.param.Control
----@field t number # param type id
----@field id string
----@field name string
+---@class norns.params.Control : norns.params.Param
 ---@field controlspec norns.ControlSpec
----@field formatter fun(self: norns.param.Control): string
+---@field formatter fun(self: norns.params.Control): string
 ---@field raw number # unmapped raw parameter value
 ---@field allow_pmap boolean
 ---@field action fun(value: number) # callback on value change

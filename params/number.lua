@@ -1,0 +1,10 @@
+---@class norns.params.Number : norns.params.Param
+---@field default number
+---@field value number
+---@field min number
+---@field max number
+---@field range number
+---@field wrap boolean # when true, value will get mod into given range
+---@field allow_pmap boolean
+---@field formatter fun(self: norns.params.Number)
+---@field action fun(value: number)

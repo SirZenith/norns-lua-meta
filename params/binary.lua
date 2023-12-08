@@ -1,14 +1,11 @@
----@alias norns.param.BinaryBehaviorType
+---@alias norns.params.BinaryBehaviorType
 ---| "trigger" # (default)
 ---| "momentary"
 ---| "toggle"
 
----@class norns.param.BinaryParam
----@field t number # param type id
----@field id string
----@field name string
+---@class norns.params.BinaryParam : norns.params.Param
 ---@field default number
 ---@field value number
----@field behavior norns.param.BinaryBehaviorType
----@field action fun(value: number)
+---@field behavior norns.params.BinaryBehaviorType
 ---@field allow_pmap boolean
+---@field action fun(value: number)

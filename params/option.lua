@@ -1,0 +1,7 @@
+---@class norns.params.Option : norns.params.Param
+---@field options string[]
+---@field count number # length of option list
+---@field default number # default selection index, if none is give, 1 would be the value
+---@field selected number # currently selected option index
+---@field action fun(value: number)
+---@field allow_pmap boolean

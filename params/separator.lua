@@ -1,0 +1,1 @@
+---@class norns.params.Separator : norns.params.Param

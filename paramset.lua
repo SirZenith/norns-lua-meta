@@ -13,6 +13,10 @@
 -- User can create their own ParamSet Object by `paramset.new()` in script, and
 -- use it for configuaration managing.
 ---@class norns.ParamSet
+---@field name string # name of ParamSet. Some pset file contains this value.
+---@field action_write fun(filename: string, param_set_name: string, pset_number: number)
+---@field action_read fun(filename: string, silent: boolean, pset_number: number)
+---@field action_delete fun(filename: number, param_set_name: string, pset_number: number)
 paramset = {}
 
 params = {} ---@type norns.ParamSet
@@ -156,6 +160,11 @@ function paramset:get_allow_pmap(index) end
 -- ----------------------------------------------------------------------------
 -- value operation
 
+-- lookup_param tries to find parameter object in ParamSet.
+---@param index number | string # parameter index in parameter list or parameter id
+---@return norns.param.Param
+function paramset:lookup_param(index) end
+
 -- set writes new value to param.
 ---@param index number | string # parameter index in parameter list or parameter id
 ---@param v any # new param value
@@ -183,16 +192,16 @@ function paramset:get_raw(index) end
 ---@param d number # value offset
 function paramset:delta(index, d) end
 
+--  set_save sets if a parameter should be saved in file.
+---@param index number | string # parameter index in parameter list or parameter id
+---@param state boolean
+function paramset:set_save(index, state) end
+
 -- set_actioin binds a function to parameter, function gets called on parameter
 -- value is changed. New parameter value will be passed to that function.
 ---@param index number | string # parameter index in parameter list or parameter id
 ---@param func fun(value: any)
 function paramset:set_action(index, func) end
-
---  set_save sets if a parameter should be saved in file.
----@param index number | string # parameter index in parameter list or parameter id
----@param state boolean
-function paramset:set_save(index, state) end
 
 -- ----------------------------------------------------------------------------
 --  visibility
@@ -216,7 +225,8 @@ function paramset:visible(index) end
 ---    is passed, file will be <scirptname>-<number>.pset under local data
 ---    directory. When nil is passed, config will be written to <scriptname>.pset
 ---    file.
----@param name? string
+---@param name? string # name for this preset.
+---    this name will be read into `name` field of ParamSet when preset gets loaded.
 function paramset:write(filename, name) end
 
 -- read load parameters from file.

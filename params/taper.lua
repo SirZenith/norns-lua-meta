@@ -1,0 +1,12 @@
+-- Taper represents a non-linear movement, which maps a linear a linear interval
+-- [0, 1] to f(x) = (exp(k * x) - 1) / (exp(k) - 1) where k is a constant given by user.
+-- Then this value is mapped again into a given range [min, max].
+---@class norns.params.Taper : norns.params.Param
+---@field min number # default 0
+---@field max number # default 0
+---@field k number # coeffecient
+---@field action fun(value: number)
+---@field allow_pmap boolean
+---@field value number
+---@field default number 
+---@field units string
